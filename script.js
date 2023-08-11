@@ -92,17 +92,24 @@ function capitalize(string) {
 }
 
 function game() {
-    // initialize score, declare round points, player and computer selections
+    // initialize score, declare round points, player and computer selections, cancel
     let score = 0;
     let roundPoints;
     let playerSelection;
     let computerSelection;
+    let cancel = false;
     // play 5 rounds
     for (let i = 0; i < 5; i++) {
         // for each round:
         // - get player selection
         playerSelection = prompt('First comes rock... Rock, paper, scissors!');
-        // capitalize player selection
+        // - if null or '', end game:
+        // break cycle, cancel = true
+        if (playerSelection === '' || playerSelection === null) {
+            cancel = true;
+            break;
+        }
+        // - capitalize player selection
         playerSelection = capitalize(playerSelection);
         // - get computer selection
         computerSelection = getComputerChoice();
@@ -114,6 +121,10 @@ function game() {
         roundResult = getRoundResulMessage(roundPoints, playerSelection, computerSelection);
         // - display round result
         console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
+    }
+    // if cancel,  return display 'Canceled'
+    if (cancel) {
+        return console.log('Canceled');
     }
     // report a winner: if score > 0, win; 0 -> tie; score < 0 -> lose
     if (score === 0) {
