@@ -97,7 +97,7 @@ function game() {
     let roundPoints;
     let playerSelection;
     let computerSelection;
-    let cancel = false;
+    let canceled = false;
     // play 5 rounds
     for (let i = 0; i < 5; i++) {
         // for each round:
@@ -106,7 +106,7 @@ function game() {
         // - if null or '', end game:
         // break cycle, cancel = true
         if (playerSelection === '' || playerSelection === null) {
-            cancel = true;
+            canceled = true;
             break;
         }
         // - capitalize player selection
@@ -123,7 +123,7 @@ function game() {
         console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
     }
     // if cancel,  return display 'Canceled'
-    if (cancel) {
+    if (canceled) {
         return console.log('Canceled');
     }
     // report a winner: if score > 0, win; 0 -> tie; score < 0 -> lose
