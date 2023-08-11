@@ -2,22 +2,22 @@
 
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function getComputerChoice() {
-    // get random number out of 1-3 range, store it in variable choice
+    // get random number out of 1-3 range, store it in variable 'choice'
     let choice = generateRandom(1, 4);
     // if 1 - return rock
     // if 2 - return paper
     // if 3 - return scissors
     switch (choice) {
         case 1:
-            return 'rock';
+            return 'Rock';
             break;
 
         case 2:
-            return 'paper';
+            return 'Paper';
             break;
 
         case 3:
-            return 'scissors';
+            return 'Scissors';
             break;
 
         default:
@@ -38,14 +38,12 @@ function generateRandom(min, max) {
 
 // function that plays a single round of Rock Paper Scissors. 
 // The function should take two parameters - the playerSelection and computerSelection 
-// - and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
+// - and then return round points
 
 function playRound(playerSelection, computerSelection) {
-    // capitalize player celection
-    playerSelection = capitalize(playerSelection);
     // if player = computer -> tie; print playerChoice vs. Computer Choice
     if (playerSelection === computerSelection) {
-        return `A tie! ${playerSelection} vs. ${computerSelection}`;
+        return 0;
     }
     // player - rock, computer - paper -> you lose
     // player - paper, computer - scissors -> you lose
@@ -53,11 +51,36 @@ function playRound(playerSelection, computerSelection) {
     else if (playerSelection === 'Rock' && computerSelection === 'Paper'
     || playerSelection === 'Paper' && computerSelection === 'Scissors'
     || playerSelection === 'Scissors' && computerSelection === 'Rock') {
-        return `You lose! ${computerSelection} beats ${playerSelection}`;
+        return -1;
     }
     // otherwise player win, Player Choice beats Computer Choice
+    else if (computerSelection === 'Rock' && playerSelection === 'Paper'
+    || computerSelection === 'Paper' && playerSelection === 'Scissors'
+    || computerSelection === 'Scissors' && playerSelection === 'Rock') {
+        return 1;
+    }
     else {
-        return `You win! ${playerSelection} beats ${computerSelection}`;
+        return 'Selections error';
+    }
+}
+
+function getRoundResulMessage(result, playerSelection, computerSelection) {
+    switch (result) {
+        case 0:
+            return `A tie! ${playerSelection} vs. ${computerSelection}`;
+            break;
+
+        case 1:
+            return `You win! ${playerSelection} beats ${computerSelection}`;
+            break;
+
+        case -1:
+            return `You lose! ${computerSelection} beats ${playerSelection}`;
+            break;
+
+        default:
+            return 'Round result error!';
+            break;
     }
 }
 
@@ -66,4 +89,43 @@ function capitalize(string) {
     firstLetter = string.substr(0, 1);
     string = string.replace(firstLetter, firstLetter.toUpperCase());
     return string;
+}
+
+function game() {
+    // initialize score, declare round points, player and computer selections
+    let score = 0;
+    let roundPoints;
+    let playerSelection;
+    let computerSelection;
+    // play 5 rounds
+    for (let i = 0; i < 5; i++) {
+        // for each round:
+        // - get player selection
+        playerSelection = prompt('First comes rock... Rock, paper, scissors!');
+        // capitalize player selection
+        playerSelection = capitalize(playerSelection);
+        // - get computer selection
+        computerSelection = getComputerChoice();
+        // - play a round, get round points
+        roundPoints = playRound(playerSelection, computerSelection);
+        // - add round points to the score
+        score += roundPoints;
+        // - get round result message
+        roundResult = getRoundResulMessage(roundPoints, playerSelection, computerSelection);
+        // - display round result
+        console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
+    }
+    // report a winner: if score > 0, win; 0 -> tie; score < 0 -> lose
+    if (score === 0) {
+        console.log('Game result: A tie!');
+    }
+    else if (score > 0) {
+        console.log('Game result: You won!');
+    }
+    else {
+        console.log('Game result: You lost');
+    }
+
+    // TODO:
+    // - handle cancel
 }
