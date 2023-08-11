@@ -136,7 +136,4 @@ function game() {
     else {
         console.log('Game result: You lost');
     }
-
-    // TODO:
-    // - handle cancel
 }
