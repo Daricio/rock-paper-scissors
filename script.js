@@ -64,7 +64,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function getRoundResulMessage(result, playerSelection, computerSelection) {
+function getRoundResultMessage(result, playerSelection, computerSelection) {
     switch (result) {
         case 0:
             return `A tie! ${playerSelection} vs. ${computerSelection}`;
@@ -118,7 +118,7 @@ function game() {
         // - add round points to the score
         score += roundPoints;
         // - get round result message
-        roundResult = getRoundResulMessage(roundPoints, playerSelection, computerSelection);
+        roundResult = getRoundResultMessage(roundPoints, playerSelection, computerSelection);
         // - display round result
         console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
     }
