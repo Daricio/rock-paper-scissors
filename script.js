@@ -48,15 +48,15 @@ function playRound(playerSelection, computerSelection) {
     // player - rock, computer - paper -> you lose
     // player - paper, computer - scissors -> you lose
     // player - scissors, computer - rock -> you lose, Computer Choice beats Player Choice
-    else if (playerSelection === 'Rock' && computerSelection === 'Paper'
-    || playerSelection === 'Paper' && computerSelection === 'Scissors'
-    || playerSelection === 'Scissors' && computerSelection === 'Rock') {
+    else if (playerSelection === 'Rock' && computerSelection === 'Paper' ||
+    playerSelection === 'Paper' && computerSelection === 'Scissors' ||
+    playerSelection === 'Scissors' && computerSelection === 'Rock') {
         return -1;
     }
     // otherwise player win, Player Choice beats Computer Choice
-    else if (computerSelection === 'Rock' && playerSelection === 'Paper'
-    || computerSelection === 'Paper' && playerSelection === 'Scissors'
-    || computerSelection === 'Scissors' && playerSelection === 'Rock') {
+    else if (computerSelection === 'Rock' && playerSelection === 'Paper' ||
+    computerSelection === 'Paper' && playerSelection === 'Scissors' ||
+    computerSelection === 'Scissors' && playerSelection === 'Rock') {
         return 1;
     }
     else {
@@ -91,41 +91,36 @@ function capitalize(string) {
     return string;
 }
 
+// two scores, everything besides score in event handler
+// when press button r/p/s, play round with corresponding player choice, get round points, add to score
+// announce round result
+// when one of scores = 5, announce winner of the game, reset scores
+
+let playerScore = 0;
+let computerScore = 0;
+
 function game() {
     // initialize score, declare round points, player and computer selections, cancel
     let score = 0;
     let roundPoints;
     let playerSelection;
     let computerSelection;
-    let canceled = false;
-    // play 5 rounds
-    for (let i = 0; i < 5; i++) {
-        // for each round:
-        // - get player selection
-        playerSelection = prompt('First comes rock... Rock, paper, scissors!');
-        // - if null or '', end game:
-        // break cycle, cancel = true
-        if (playerSelection === '' || playerSelection === null) {
-            canceled = true;
-            break;
-        }
-        // - capitalize player selection
-        playerSelection = capitalize(playerSelection);
-        // - get computer selection
-        computerSelection = getComputerChoice();
-        // - play a round, get round points
-        roundPoints = playRound(playerSelection, computerSelection);
-        // - add round points to the score
-        score += roundPoints;
-        // - get round result message
-        roundResult = getRoundResultMessage(roundPoints, playerSelection, computerSelection);
-        // - display round result
-        console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
-    }
-    // if cancel,  return display 'Canceled'
-    if (canceled) {
-        return console.log('Canceled');
-    }
+
+    // - get player selection
+    playerSelection = prompt('First comes rock... Rock, paper, scissors!');
+    // - capitalize player selection
+    playerSelection = capitalize(playerSelection);
+    // - get computer selection
+    computerSelection = getComputerChoice();
+    // - play a round, get round points
+    roundPoints = playRound(playerSelection, computerSelection);
+    // - add round points to the score
+    score += roundPoints;
+    // - get round result message
+    roundResult = getRoundResultMessage(roundPoints, playerSelection, computerSelection);
+    // - display round result
+    console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
+    
     // report a winner: if score > 0, win; 0 -> tie; score < 0 -> lose
     if (score === 0) {
         console.log('Game result: A tie!');
