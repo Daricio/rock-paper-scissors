@@ -1,4 +1,4 @@
-
+const roundResult = document.getElementById('round-result');
 
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function getComputerChoice() {
@@ -64,7 +64,9 @@ function playRound(playerSelection, computerSelection) {
         return 'Selections error';
     }
 
-    console.log(getRoundResultMessage(roundPoints, playerSelection, computerSelection));
+    const resultMessage = getRoundResultMessage(roundPoints, playerSelection, computerSelection);
+    roundResult.textContent = resultMessage;
+    
     // change scores
     return roundPoints;
 }
