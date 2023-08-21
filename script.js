@@ -7,6 +7,20 @@ const yourScore = document.getElementById('your-score');
 const opponentScore = document.getElementById('opponent-score');
 const gameResult = document.getElementById('game-result');
 
+const rockButton = document.getElementById('rock');
+const paperButton = document.getElementById('paper');
+const scissorsButton = document.getElementById('scissors');
+
+rockButton.addEventListener('click', () => {
+    playRound('Rock', getComputerChoice());
+});
+paperButton.addEventListener('click', () => {
+    playRound('Paper', getComputerChoice());
+});
+scissorsButton.addEventListener('click', () => {
+    playRound('Scissors', getComputerChoice());
+});
+
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function getComputerChoice() {
     // get random number out of 1-3 range, store it in variable 'choice'
@@ -117,63 +131,3 @@ function getRoundResultMessage(result, playerSelection, computerSelection) {
             break;
     }
 }
-
-function capitalize(string) {
-    string = string.toLowerCase();
-    firstLetter = string.substr(0, 1);
-    string = string.replace(firstLetter, firstLetter.toUpperCase());
-    return string;
-}
-
-// two scores, everything besides score in event handler
-// when press button r/p/s, play round with corresponding player choice, get round points, add to score
-// announce round result
-// when one of scores = 5, announce winner of the game, reset scores
-
-const rockButton = document.getElementById('rock');
-const paperButton = document.getElementById('paper');
-const scissorsButton = document.getElementById('scissors');
-
-rockButton.addEventListener('click', () => {
-    playRound('Rock', getComputerChoice());
-});
-paperButton.addEventListener('click', () => {
-    playRound('Paper', getComputerChoice());
-});
-scissorsButton.addEventListener('click', () => {
-    playRound('Scissors', getComputerChoice());
-});
-
-// function game() {
-//     // initialize score, declare round points, player and computer selections, cancel
-//     let score = 0;
-//     let roundPoints;
-//     let playerSelection;
-//     let computerSelection;
-
-//     // - get player selection
-//     playerSelection = prompt('First comes rock... Rock, paper, scissors!');
-//     // - capitalize player selection
-//     playerSelection = capitalize(playerSelection);
-//     // - get computer selection
-//     computerSelection = getComputerChoice();
-//     // - play a round, get round points
-//     roundPoints = playRound(playerSelection, computerSelection);
-//     // - add round points to the score
-//     score += roundPoints;
-//     // - get round result message
-//     roundResult = getRoundResultMessage(roundPoints, playerSelection, computerSelection);
-//     // - display round result
-//     console.log(`Round ${i + 1}: ${roundResult}\nCurrent score: ${score}`);
-
-//     // report a winner: if score > 0, win; 0 -> tie; score < 0 -> lose
-//     if (score === 0) {
-//         console.log('Game result: A tie!');
-//     }
-//     else if (score > 0) {
-//         console.log('Game result: You won!');
-//     }
-//     else {
-//         console.log('Game result: You lost');
-//     }
-// }
