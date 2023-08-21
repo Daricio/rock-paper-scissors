@@ -1,5 +1,12 @@
 const roundResult = document.getElementById('round-result');
 
+let playerScore = 0;
+let computerScore = 0;
+
+const yourScore = document.getElementById('your-score');
+const opponentScore = document.getElementById('opponent-score');
+const gameResult = document.getElementById('game-result');
+
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function getComputerChoice() {
     // get random number out of 1-3 range, store it in variable 'choice'
@@ -41,6 +48,13 @@ function generateRandom(min, max) {
 // - and then return round points
 
 function playRound(playerSelection, computerSelection) {
+    // if new game, reset
+    if (playerScore === 5 || computerScore === 5) {
+        playerScore = 0;
+        computerScore = 0;
+        gameResult.textContent = '';
+    }
+
     let roundPoints;
     // if player = computer -> tie; print playerChoice vs. Computer Choice
     if (playerSelection === computerSelection) {
@@ -53,12 +67,14 @@ function playRound(playerSelection, computerSelection) {
     playerSelection === 'Paper' && computerSelection === 'Scissors' ||
     playerSelection === 'Scissors' && computerSelection === 'Rock') {
         roundPoints = -1;
+        computerScore++;
     }
     // otherwise player win, Player Choice beats Computer Choice
     else if (computerSelection === 'Rock' && playerSelection === 'Paper' ||
     computerSelection === 'Paper' && playerSelection === 'Scissors' ||
     computerSelection === 'Scissors' && playerSelection === 'Rock') {
         roundPoints = 1;
+        playerScore++;
     }
     else {
         return 'Selections error';
@@ -66,8 +82,19 @@ function playRound(playerSelection, computerSelection) {
 
     const resultMessage = getRoundResultMessage(roundPoints, playerSelection, computerSelection);
     roundResult.textContent = resultMessage;
-    
-    // change scores
+
+    yourScore.textContent = `${playerScore}`;
+    opponentScore.textContent = `${computerScore}`;
+
+    // announce winner of the game
+    if (playerScore === 5) {
+        gameResult.textContent = 'You win!';
+    }
+
+    if (computerScore === 5) {
+        gameResult.textContent = 'You lost :(';
+    }
+
     return roundPoints;
 }
 
@@ -103,12 +130,9 @@ function capitalize(string) {
 // announce round result
 // when one of scores = 5, announce winner of the game, reset scores
 
-let playerScore = 0;
-let computerScore = 0;
-
-let rockButton = document.getElementById('rock');
-let paperButton = document.getElementById('paper');
-let scissorsButton = document.getElementById('scissors');
+const rockButton = document.getElementById('rock');
+const paperButton = document.getElementById('paper');
+const scissorsButton = document.getElementById('scissors');
 
 rockButton.addEventListener('click', () => {
     playRound('Rock', getComputerChoice());
